@@ -1,6 +1,6 @@
 def test_error_types(e: Exception) -> None:
     try:
-        raise e
+        raise
     except ValueError:
         print("Caught ValueError: invalid literal for int()")
     except ZeroDivisionError:
@@ -9,6 +9,11 @@ def test_error_types(e: Exception) -> None:
         print("Caught FileNotFoundError: No such file ’missing.txt’")
     except KeyError:
         print("Caught KeyError: ’missing_plant’")
+    except Exception:
+        print(f"{type(e).__name__}: {e}")
+        print("Caught an error, but program continues!")
+    finally:
+        print("")
 
 
 def garden_operations() -> None:
@@ -19,30 +24,29 @@ def garden_operations() -> None:
         int("abc")
     except Exception as e:
         test_error_types(e)
-    finally:
-        print("")
     print("Testing ZeroDivisionError...")
     try:
         12 / 0
     except Exception as e:
         test_error_types(e)
-    finally:
-        print("")
     print("Testing FileNotFoundError...")
     try:
         open("missing.txt")
     except Exception as e:
         test_error_types(e)
-    finally:
-        print("")
     print("Testing KeyError...")
     plant: dict[str, int] = {}
     try:
         plant["42"]
     except Exception as e:
         test_error_types(e)
-    finally:
-        print("")
+    print("Testing multiple errors together...")
+    list_plant: list[str] = []
+    try:
+        list_plant[42]
+        # list_plant.toto
+    except Exception as e:
+        test_error_types(e)
     print("All error types tested successfully!")
 
 
