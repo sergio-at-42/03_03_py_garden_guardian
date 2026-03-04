@@ -16,31 +16,22 @@ class Plant:
         print(f"Watering {self.get_name()}")
 
 
-class WaterError(Exception):
-    """Base class for water-related errors."""
-    def __init__(self, plant_name: str | None) -> None:
-        super().__init__(f"Cannot water {plant_name} - invalid plant!")
-
-
-def water_plants(plant_list: list[Plant | None]) -> None:
+def water_plants(plant_list: list[Plant]) -> None:
     try:
         print("Opening watering system")
         for p in plant_list:
-            if isinstance(p, Plant):
-                p.watering()
-            else:
-                raise WaterError(p)
+            p.watering()
         print("Watering completed successfully!")
-    except WaterError as e:
-        print(f"Error: {e}")
+    except AttributeError:
+        print(f"Error: Cannot water {p} - invalid plant!")
     finally:
         print("Closing watering system (cleanup)")
 
 
 def test_watering_system() -> None:
-    plant_list: list[Plant | None] = [Plant("tomato"),
-                                      Plant("lettuce"),
-                                      Plant("carrots")]
+    plant_list: list[Plant] = [Plant("tomato"),
+                               Plant("lettuce"),
+                               Plant("carrots")]
     print("\nTesting normal watering...")
     water_plants(plant_list)
     print("\nTesting with error...")
