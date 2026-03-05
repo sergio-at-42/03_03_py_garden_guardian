@@ -5,7 +5,7 @@ class PlantError(Exception):
 
 
 class PlantNameEmptyError(PlantError):
-    """Base class for water-related errors."""
+    """Base class for plant name-related errors."""
     def __init__(self) -> None:
         super().__init__("Plant name cannot be empty!")
 
@@ -16,20 +16,20 @@ class WaterLevelTooLowError(PlantError):
         super().__init__(f"Water level {level} is too low (min 1)")
 
 
-class WaterLevelTooHightError(PlantError):
+class WaterLevelTooHighError(PlantError):
     """Base class for water-related errors."""
     def __init__(self, level: int) -> None:
         super().__init__(f"Water level {level} is too high (max 10)")
 
 
 class SunlightTooLowError(PlantError):
-    """Base class for water-related errors."""
+    """Base class for sunlight-related errors."""
     def __init__(self, sunlight: int) -> None:
         super().__init__(f"Sunlight hours {sunlight} is too low (min 2)")
 
 
-class SunlightTooHightError(PlantError):
-    """Base class for water-related errors."""
+class SunlightTooHighError(PlantError):
+    """Base class for sunlight-related errors."""
     def __init__(self, sunlight: int) -> None:
         super().__init__(f"Sunlight hours {sunlight} is too high (max 12)")
 
@@ -42,11 +42,11 @@ def check_plant_health(plant_name: str, water_level: int,
         if water_level < 1:
             raise WaterLevelTooLowError(water_level)
         if water_level > 10:
-            raise WaterLevelTooHightError(water_level)
+            raise WaterLevelTooHighError(water_level)
         if sunlight_hours < 2:
             raise SunlightTooLowError(sunlight_hours)
         if sunlight_hours > 12:
-            raise SunlightTooHightError(sunlight_hours)
+            raise SunlightTooHighError(sunlight_hours)
     except PlantError as e:
         print(f"Error: {e}")
     else:
