@@ -58,7 +58,8 @@ class SunlightTooHighError(PlantError):
 
 class Plant:
 
-    def __init__(self, name: str = "Plant", water: int = 0, sun: int = 0) -> None:
+    def __init__(self, name: str = "Plant", water: int = 0,
+                 sun: int = 0) -> None:
         self._name: str = ""
         self.water: int = 0
         self.sun: int = 0
@@ -69,19 +70,19 @@ class Plant:
     def get_name(self) -> str:
         return (self._name)
 
-    def get_water(self) -> str:
+    def get_water(self) -> int:
         return (self._water)
 
-    def get_sun(self) -> str:
+    def get_sun(self) -> int:
         return (self._sun)
 
     def set_name(self, name: str) -> None:
         self._name = name
 
-    def set_water(self, water: str) -> None:
+    def set_water(self, water: int) -> None:
         self._water = water
 
-    def set_sun(self, sun: str) -> None:
+    def set_sun(self, sun: int) -> None:
         self._sun = sun
 
 
@@ -90,13 +91,14 @@ class GardenManager:
     def __init__(self) -> None:
         self.plants: list[Plant] = []
         self.tank: int = 42
-    
+
     def add_plant(self, plant_name: str, water: int = 0, sun: int = 0) -> bool:
         error: bool = False
         try:
             if plant_name == "":
                 raise PlantNameEmptyError()
-            plant = next((p for p in self.plants if p.get_name() == plant_name), None)
+            plant = next((p for p in self.plants
+                          if p.get_name() == plant_name), None)
             if plant is None:
                 self.plants.append(Plant(plant_name, water, sun))
             else:
@@ -118,7 +120,8 @@ class GardenManager:
                 try:
                     if plant_name == "":
                         raise PlantNameEmptyError()
-                    plant = next((p for p in self.plants if p.get_name() == plant_name), None)
+                    plant = next((p for p in self.plants
+                                  if p.get_name() == plant_name), None)
                     if plant is None:
                         raise PlantNameNotFound(plant_name)
                     if water > self.tank:
@@ -134,7 +137,6 @@ class GardenManager:
         finally:
             print("Closing watering system (cleanup)")
         return (error)
-
 
     def check_plant_health(self) -> bool:
         error: bool = False
@@ -152,7 +154,9 @@ class GardenManager:
                 print(f"Error checking {plant.get_name()} : {e}")
                 error = True
             else:
-                print(f"{plant.get_name()}: healthy (water: {plant.get_water()}, sun: {plant.get_sun()})")
+                print(f"{plant.get_name()}: ", end="")
+                print(f"healthy (water: {plant.get_water()}", end="")
+                print(f", sun: {plant.get_sun()})")
                 error = False
         return (error)
 
@@ -188,4 +192,4 @@ def test_garden_management() -> None:
 
 
 if __name__ == "__main__":
-    test_garden_management()    
+    test_garden_management()
