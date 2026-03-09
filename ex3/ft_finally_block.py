@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+from typing import Any
+
+
 class Plant:
 
     def __init__(self, name: str) -> None:
@@ -16,7 +19,7 @@ class Plant:
         print(f"Watering {self.get_name()}")
 
 
-def water_plants(plant_list: list[Plant]) -> None:
+def water_plants(plant_list: list[Any]) -> None:
     try:
         print("Opening watering system")
         for p in plant_list:
@@ -29,9 +32,9 @@ def water_plants(plant_list: list[Plant]) -> None:
 
 
 def test_watering_system() -> None:
-    plant_list: list[Plant] = [Plant("tomato"),
-                               Plant("lettuce"),
-                               Plant("carrots")]
+    plant_list: list[Any] = [Plant("tomato"),
+                             Plant("lettuce"),
+                             Plant("carrots")]
     print("\nTesting normal watering...")
     water_plants(plant_list)
     print("\nTesting with error...")
